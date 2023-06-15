@@ -36,7 +36,7 @@ This script automates the process of uploading *.mp4 files from a local folder t
 ## Notes
 
 - This script is written in sh syntax and has been tested in docker image only.
-- I am a novice in sh script, and I used ChatGPT to create it, including this README file.😎
+- I am a novice in sh script, and [I used ChatGPT to create it, including this README file](https://chat.openai.com/share/c694c95d-21ed-4d04-afb4-b650e0c43688).😎
 
 ## License
 
