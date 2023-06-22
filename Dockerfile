@@ -15,7 +15,7 @@ ENV STORAGE_ACCOUNT_KEY=""
 ENV CONTAINER_NAME=""
 ENV DESTINATION_DIRECTORY=""
 
-VOLUME [ "/toUpload" ]
+VOLUME [ "/sharedvolume" ]
 
 # Execute the script with provided settings
 ENTRYPOINT ["./azure-uploader.sh"]

@@ -9,5 +9,5 @@ services:
       - STORAGE_ACCOUNT_NAME=your-storage-account-name
       - STORAGE_ACCOUNT_KEY=your-storage-account-key
     volumes:
-      - /path/to/local/folder:/toUpload
+      - /path/to/local/folder:/sharedvolume
     command: "keyword-of-the-filename"
