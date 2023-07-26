@@ -46,7 +46,7 @@ fi
 echo "Uploading files..."
 
 # Upload files matching the search filter to Azure Blob Storage using the Azure CLI
-az storage blob upload-batch --destination "$CONTAINER_NAME" --destination-path "$DESTINATION_DIRECTORY" --account-name "$STORAGE_ACCOUNT_NAME" --account-key "$STORAGE_ACCOUNT_KEY" --type block --source "/sharedvolume" --pattern "*$SEARCH_FILTER*.mp4"
+az storage blob upload-batch --destination "$CONTAINER_NAME" --destination-path "$DESTINATION_DIRECTORY" --account-name "$STORAGE_ACCOUNT_NAME" --account-key "$STORAGE_ACCOUNT_KEY" --type block --source "/sharedvolume" --pattern "*$SEARCH_FILTER*.mp4" --overwrite
 
 # Delete the uploaded files
 while IFS= read -r file_path; do
