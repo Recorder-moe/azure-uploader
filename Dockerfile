@@ -1,13 +1,20 @@
-FROM mcr.microsoft.com/azure-cli
+# syntax=docker/dockerfile:1
+ARG UID=1001
 
-# Set the working directory
+FROM mcr.microsoft.com/azure-cli:latest as final
+
+ARG UID
+
+RUN install -d -m 774 -o $UID -g 0 /app && \
+    install -d -m 774 -o $UID -g 0 /.azure
 WORKDIR /app
 
-# Copy the bash script into the container
-COPY azure-uploader.sh .
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 /bin/dumb-init 
+RUN chmod +x /bin/dumb-init
 
-# Set the script as executable
-RUN chmod +x azure-uploader.sh
+# Copy the bash script into the container
+COPY --chown=$UID:0 --chmod=774 \
+    azure-uploader.sh .
 
 # Set environment variables
 ENV STORAGE_ACCOUNT_NAME=""
@@ -15,7 +22,7 @@ ENV STORAGE_ACCOUNT_KEY=""
 ENV CONTAINER_NAME=""
 ENV DESTINATION_DIRECTORY=""
 
+USER $UID
 VOLUME [ "/sharedvolume" ]
 
-# Execute the script with provided settings
-ENTRYPOINT ["./azure-uploader.sh"]
+ENTRYPOINT [ "dumb-init", "--", "./azure-uploader.sh" ]
