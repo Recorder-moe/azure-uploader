@@ -35,11 +35,25 @@ This script automates the process of uploading *.mp4 files from a local folder t
 > **Note**\
 > Take a look at the [docker-compose.yml](docker-compose.yml) file for an example of how to run the container with Docker Compose.
 
-## Notes
+## LICENSE
 
-- This script is written in sh syntax and has been tested in docker image only.
-- I am a novice in sh script, and [I used ChatGPT to create it, including this README file](https://chat.openai.com/share/c694c95d-21ed-4d04-afb4-b650e0c43688).😎
+> [!CAUTION]
+> A GPLv3 licensed Dockerfile means that you _**MUST**_ **distribute the source code with the same license**, if you
+>
+> - Re-distribute the image. (You can simply point to this GitHub repository if you doesn't made any code changes.)
+> - Distribute a image that uses code from this repository.
+> - Or **distribute a image based on this image**. (`FROM ghcr.io/recorder-moe/azure-uploader` in your Dockerfile)
+>
+> "Distribute" means to make the image available for other people to download, usually by pushing it to a public registry. If you are solely using it for your personal purposes, this has no impact on you.
+>
+> Please consult the [LICENSE](LICENSE) for more details.
 
-## License
+<img src="https://github.com/jim60105/Dockerfile-template/assets/16995691/ea799bbb-d531-4514-baee-13874322ec48" alt="gplv3" width="300" />
 
-This project is licensed under the [MIT License](LICENSE).
+[GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
