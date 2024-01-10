@@ -43,14 +43,56 @@ if [ ! -s "temp.txt" ]; then
     exit 1
 fi
 
-echo "Uploading files..."
+while IFS= read -r FILEPATH; do
+    echo "Uploading file: ${FILEPATH}"
 
-# Upload files matching the search filter to Azure Blob Storage using the Azure CLI
-az storage blob upload-batch --destination "$CONTAINER_NAME" --destination-path "$DESTINATION_DIRECTORY" --account-name "$STORAGE_ACCOUNT_NAME" --account-key "$STORAGE_ACCOUNT_KEY" --type block --source "/sharedvolume" --pattern "*$SEARCH_FILTER*.mp4" --overwrite
+    # https://gist.github.com/rtyler/30e51dc72bed23718388c43f9c11da76
+    FILENAME=$(basename "$FILEPATH")
 
-# Delete the uploaded files
-while IFS= read -r file_path; do
-    rm "$file_path"
+    authorization="SharedKey"
+
+    HTTP_METHOD="PUT"
+    request_date=$(TZ=GMT date "+%a, %d %h %Y %H:%M:%S %Z")
+    storage_service_version="2015-02-21"
+
+    # HTTP Request headers
+    x_ms_date_h="x-ms-date:$request_date"
+    x_ms_version_h="x-ms-version:$storage_service_version"
+    x_ms_blob_type_h="x-ms-blob-type:BlockBlob"
+
+    FILE_LENGTH=$(wc -c <"${FILEPATH}")
+    FILE_TYPE=$(file --mime-type -b "${FILEPATH}")
+
+    # Build the signature string
+    canonicalized_headers="${x_ms_blob_type_h}\n${x_ms_date_h}\n${x_ms_version_h}"
+    canonicalized_resource="/${STORAGE_ACCOUNT_NAME}/${CONTAINER_NAME}${DESTINATION_DIRECTORY}/${FILENAME}"
+    string_to_sign="${HTTP_METHOD}\n\n\n${FILE_LENGTH}\n\n${FILE_TYPE}\n\n\n\n\n\n\n${canonicalized_headers}\n${canonicalized_resource}"
+
+    # Decode the Base64 encoded access key, convert to Hex.
+    decoded_hex_key="$(printf "%s" "$STORAGE_ACCOUNT_KEY" | base64 -d -w0 | xxd -p -c256)"
+
+    # Create the HMAC signature for the Authorization header
+    # shellcheck disable=SC2059
+    signature=$(printf "$string_to_sign" | openssl dgst -sha256 -mac HMAC -macopt "hexkey:$decoded_hex_key" -binary | base64 -w0)
+
+    authorization_header="Authorization: $authorization $STORAGE_ACCOUNT_NAME:$signature"
+    OUTPUT_FILE="https://${STORAGE_ACCOUNT_NAME}.blob.core.windows.net/${CONTAINER_NAME}${DESTINATION_DIRECTORY}/${FILENAME}"
+
+    if curl -X ${HTTP_METHOD} \
+        -T "${FILEPATH}" \
+        -H "$x_ms_date_h" \
+        -H "$x_ms_version_h" \
+        -H "$x_ms_blob_type_h" \
+        -H "$authorization_header" \
+        -H "Content-Type: ${FILE_TYPE}" \
+        "${OUTPUT_FILE}"; then
+        echo "Uploaded to:" "${OUTPUT_FILE}"
+
+        if [ "$REMOVE_SUCCESS_FILES" = "true" ]; then
+            rm "$FILEPATH"
+            echo "Removed file:" "${FILEPATH}"
+        fi
+    fi
 done <temp.txt
 
 # Remove the temporary file

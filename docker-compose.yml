@@ -8,6 +8,7 @@ services:
       - DESTINATION_DIRECTORY=/videos
       - STORAGE_ACCOUNT_NAME=your-storage-account-name
       - STORAGE_ACCOUNT_KEY=your-storage-account-key
+      - REMOVE_SUCCESS_FILES=false
     volumes:
       - /path/to/local/folder:/sharedvolume
     command: "keyword-of-the-filename"

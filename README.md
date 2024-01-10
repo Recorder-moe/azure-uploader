@@ -17,6 +17,7 @@ This script automates the process of uploading *.mp4 files from a local folder t
               -e STORAGE_ACCOUNT_KEY="your-storage-account-key" \
               -e CONTAINER_NAME="your-container-name" \
               -e DESTINATION_DIRECTORY="your/destination/directory" \
+              -e REMOVE_SUCCESS_FILES="true" \
               ghcr.io/recorder-moe/azure-uploader:latest video
    ```
 
@@ -27,6 +28,7 @@ This script automates the process of uploading *.mp4 files from a local folder t
    - `STORAGE_ACCOUNT_KEY`: The access key for the Azure Storage account.
    - `CONTAINER_NAME`: The name of the Azure Blob Storage container.
    - `DESTINATION_DIRECTORY`: The destination directory in the Azure Blob Storage container.
+   - `REMOVE_SUCCESS_FILES`: Remove the files that have been uploaded successfully. The default value is `true`. If you want to keep the files, set it to `false`.
 
 1. The script will upload the matching files to Azure Blob Storage and **delete them** from the local folder.
 
