@@ -9,9 +9,11 @@ RUN install -d -m 774 -o $UID -g 0 /app
 WORKDIR /app
 
 # Use dumb-init to handle signals
-RUN apk add --no-cache dumb-init openssl curl file
+RUN apk add --no-cache dumb-init \
+    # Our script uses these
+    openssl curl file
 
-# Copy the bash script into the container
+# Copy the shell script into the container
 COPY --chown=$UID:0 --chmod=774 \
     azure-uploader.sh .
 
