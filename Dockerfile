@@ -21,15 +21,14 @@ RUN install -d -m 775 -o $UID -g 0 /app && \
 COPY --link --chown=$UID:0 --chmod=775 LICENSE /licenses/LICENSE
 
 RUN --mount=type=cache,id=apk-$TARGETARCH$TARGETVARIANT,sharing=locked,target=/var/cache/apk \
-    --mount=from=ghcr.io/jim60105/static-ffmpeg-upx:7.0-1,source=/dumb-init,target=/dumb-init,rw \
     apk update && apk add -u \
     openssl curl file
 
 # dumb-init
-COPY --link --from=ghcr.io/jim60105/static-ffmpeg-upx:7.0-1 /dumb-init /usr/bin/
+COPY --link --chown=$UID:0 --chmod=775 --from=ghcr.io/jim60105/static-ffmpeg-upx:7.0-1 /dumb-init /usr/bin/
 
 # Copy the shell script into the container
-COPY --chown=$UID:0 --chmod=775 azure-uploader.sh /app/
+COPY --link --chown=$UID:0 --chmod=775 azure-uploader.sh /app/
 
 # Set environment variables
 ENV STORAGE_ACCOUNT_NAME=
@@ -61,5 +60,5 @@ LABEL name="Recorder-moe/azure-uploader" \
     # This should be a number, incremented with each change
     release=${RELEASE} \
     io.k8s.display-name="azure-uploader" \
-    summary="Recorder-moe: A feature-rich command-line audio/video downloader." \
+    summary="azure-uploader: This script automates the process of uploading *.mp4 files from a local folder to Azure Blob Storage and delete them from the local folder." \
     description="This script automates the process of uploading *.mp4 files from a local folder to Azure Blob Storage and delete them from the local folder. For more information about this tool, please visit the following website: https://github.com/Recorder-moe/azure-uploader"
