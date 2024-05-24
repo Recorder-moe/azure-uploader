@@ -1,8 +1,14 @@
-version: '3.4'
-
 services:
   azure-uploader:
-    build: .
+    build:
+      context: .
+      target: final
+      args:
+        - UID=1001
+      cache_from:
+        - ghcr.io/recorder-moe/azure-uploader:cache
+      cache_to:
+        - type=inline
     environment:
       - CONTAINER_NAME=your-container-name
       - DESTINATION_DIRECTORY=/videos

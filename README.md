@@ -1,6 +1,6 @@
 # Azure Blob Storage Uploader
 
-This script automates the process of uploading *.mp4 files from a local folder to Azure Blob Storage **and delete them** from the local folder. It utilizes the Azure CLI to perform the upload.
+This script automates the process of uploading *.mp4 files from a local folder to Azure Blob Storage **and delete them** from the local folder.
 
 ## Getting Started
 
@@ -37,6 +37,16 @@ This script automates the process of uploading *.mp4 files from a local folder t
 
 ## LICENSE
 
+<img src="https://github.com/jim60105/Dockerfile-template/assets/16995691/ea799bbb-d531-4514-baee-13874322ec48" alt="gplv3" width="300" />
+
+[GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 > [!CAUTION]
 > A GPLv3 licensed Dockerfile means that you _**MUST**_ **distribute the source code with the same license**, if you
 >
@@ -47,13 +57,3 @@ This script automates the process of uploading *.mp4 files from a local folder t
 > "Distribute" means to make the image available for other people to download, usually by pushing it to a public registry. If you are solely using it for your personal purposes, this has no impact on you.
 >
 > Please consult the [LICENSE](LICENSE) for more details.
-
-<img src="https://github.com/jim60105/Dockerfile-template/assets/16995691/ea799bbb-d531-4514-baee-13874322ec48" alt="gplv3" width="300" />
-
-[GNU GENERAL PUBLIC LICENSE Version 3](LICENSE)
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
